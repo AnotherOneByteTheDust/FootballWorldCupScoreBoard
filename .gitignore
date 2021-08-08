@@ -1,0 +1,20 @@
+#Dependencies
+node_modules/
+
+
+#Documentation
+docs-html/
+docs/
+
+#Node.js artifacts
+package-lock.json
+build/
+
+#VS Code
+.vscode
+
+#Jetbrains IDEs
+.idea
+
+# Coverage
+coverage

@@ -1,0 +1,62 @@
+{
+  "name": "typescript-boilerplate",
+  "version": "1.0.0",
+  "description": "Football World Cup Score Board library implementation",
+  "main": "build/index.js",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "start": "node build/index.js",
+    "build": "npm run lint && npm test && tsc",
+    "clean": "rm -rf node_modules package-lock.json build",
+    "test": "jest",
+    "test:coverage": "npm test -- --coverage",
+    "test:watch": "npm test -- --watchAll",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "npm run lint -- --fix",
+    "docs:start": "npm run docs:generate:html && http-server -o docs-html/index.html",
+    "docs:generate": "auto-changelog -p; rm -rf docs && typedoc src/ --plugin typedoc-plugin-markdown --out docs && git add CHANGELOG.md",
+    "docs:update": "npm run docs:generate && git commit -m \"docs: updated ref docs\"",
+    "docs:generate:html": "auto-changelog -p; rm -rf docs-html && typedoc lib/ --plugin none --out docs-html && git add CHANGELOG.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinEliezer/FootballWorldCupScoreBoard"
+  },
+  "keywords": [
+    "typescript",
+    "javascript",
+    "node",
+    "jest",
+    "nodejs",
+    "eslint",
+    "nodejs-cli"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinEliezer/FootballWorldCupScoreBoard/issues"
+  },
+  "homepage": "https://github.com/kevinEliezer/FootballWorldCupScoreBoard#readme",
+  "dependencies": {
+    "@types/node": "^16.4.2",
+    "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "auto-changelog": "^2.3.0",
+    "eslint": "^7.31.0",
+    "http-server": "^13.0.0",
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.4",
+    "typedoc": "^0.21.4",
+    "typedoc-plugin-markdown": "^3.10.4"
+  },
+  "auto-changelog": {
+    "commitLimit": false,
+    "unreleased": true,
+    "sortCommits": "date-desc"
+  }
+}
