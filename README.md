@@ -1,11 +1,5 @@
 # Football World Cup Score Board Library
 
-## Tools
-
-- Typescript 4.
-- Testing with Jest version 27.
-- Documentation generator with Typedoc.
-
 ## Get started
 
 Clone the repository:
@@ -15,11 +9,20 @@ Clone the repository:
 ```
 
 cd your_local_project_name
+
 After clone, install project dependencies with npm i command.
+
+## Tools
+
+This project uses the following tools:
+
+- [Typescript 4](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-3.html).
+- Testing with [Jest version 27](https://jestjs.io/es-ES/blog/2021/05/25/jest-27).
+- Documentation generator with [Typedoc](https://typedoc.org/).
 
 ## Scripts
 
-There are some scripts for this project which you can run using npm run *script_name*
+There are some scripts which you can run with the following command: npm run *script_name*.
 
 - `start`: runs the project. It should be build first.
 - `build`: transpile TypeScript to es2020
