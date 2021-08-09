@@ -18,4 +18,8 @@ export class FootballWorldCupScoreBoard {
     this.matches.set(matchId, match);
     return matchId;
   }
+
+  getMatchTotalScore(gameId: string): number | undefined {
+    return this.matches.get(gameId)?.getTotalScore();
+  }
 }

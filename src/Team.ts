@@ -6,4 +6,8 @@ export class Team {
     this.name = name;
     this.score = 0;
   }
+
+  getScore(): number {
+    return this.score;
+  }
 }

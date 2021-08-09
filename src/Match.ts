@@ -8,4 +8,8 @@ export class Match {
     this.homeTeam = homeTeam;
     this.awayTeam = awayTeam;
   }
+
+  getTotalScore(): number {
+    return this.homeTeam.getScore() + this.awayTeam.getScore();
+  }
 }
