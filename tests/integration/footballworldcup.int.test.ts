@@ -1,13 +1,16 @@
-import { FootballWorldCupScoreBoard } from '../../src'
+import { FootballWorldCupScoreBoard } from '../../src/FootballWorldCupScoreBoard'
+import { Team } from '../../src/Team';
+
+const scoreboard = new FootballWorldCupScoreBoard();
 
 describe('Competition Score Board', () => {
-  beforeEach(() => {
-      FootballWorldCupScoreBoard scoreboard;
-  });
 
   describe('Start a new game', () => {
     it('Should be able to start a new game', () => {
-      const game = scoreboard.newGame();
+      const hostTeam = new Team("Alemania");
+      const awayTeam = new Team("Francia");
+
+      const game = scoreboard.newGame(hostTeam, awayTeam);
 
       expect(game).toBeDefined();
     })
