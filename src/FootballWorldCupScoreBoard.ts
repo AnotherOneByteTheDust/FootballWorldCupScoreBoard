@@ -48,7 +48,7 @@ export class FootballWorldCupScoreBoard {
       return this.record.find( match => match.getId() === gameId );
   }
 
-  updateGame(gameId: string, score: Array<number>): Match | undefined {
+  updateGame(gameId: string, score: [number, number]): Match | undefined {
     if (score[0] < 0 || score[1] < 0) {
       return
     }

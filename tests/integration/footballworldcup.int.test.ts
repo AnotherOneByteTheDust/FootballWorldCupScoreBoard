@@ -82,7 +82,7 @@ describe('Competition Score Board', () => {
     })
 
     it('should update a game score', () => {
-      const newScore = [3,5]
+      const newScore: [number, number] = [3, 5]
 
       scoreboard.updateGame(gameIdentifiers[1], newScore)
       const score = scoreboard.getGameScore(gameIdentifiers[1]);
@@ -91,7 +91,7 @@ describe('Competition Score Board', () => {
     })
 
     it('should not be able to update a game score if it is negative', () => {
-      const newScore = [-3,-5];
+      const newScore: [number, number] = [-3, -5]
 
       const scoreBeforeUpdate = scoreboard.getGameScore(gameIdentifiers[1]);
       scoreboard.updateGame(gameIdentifiers[1], newScore)
