@@ -48,15 +48,15 @@ describe('Competition Score Board', () => {
     })
 
     it('should finish a match succesfully', () => {
-      scoreboard.finishGameById(gameIdentifiers[1]);
-      const game = scoreboard.getGameById(gameIdentifiers[1]);
+      scoreboard.finishGame(gameIdentifiers[1]);
+      const game = scoreboard.getGame(gameIdentifiers[1]);
 
       expect(game).toBeUndefined();
     })
 
     it('should be able to get a finished game from record', () => {
-      scoreboard.finishGameById(gameIdentifiers[1]);
-      const game = scoreboard.findFinishedGameById(gameIdentifiers[1]);
+      scoreboard.finishGame(gameIdentifiers[1]);
+      const game = scoreboard.findFinishedGame(gameIdentifiers[1]);
 
       expect(game?.getId()).toEqual(gameIdentifiers[1]);
     })
@@ -84,7 +84,7 @@ describe('Competition Score Board', () => {
     it('should update a game score', () => {
       const newScore = [3,5]
 
-      scoreboard.updateGameById(gameIdentifiers[1], newScore)
+      scoreboard.updateGame(gameIdentifiers[1], newScore)
       const score = scoreboard.getGameScore(gameIdentifiers[1]);
 
       expect(score).toEqual(newScore);
