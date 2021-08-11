@@ -42,10 +42,6 @@ export class CompetitionScoreBoard {
     return this.matches.get(gameId);
   }
 
-  findFinishedMatch(gameId: string): Match | undefined {
-      return this.record.find( match => match.getId() === gameId );
-  }
-
   updateMatch(gameId: string, score: [number, number]): Match | undefined {
     if (score[0] < 0 || score[1] < 0) {
       return
