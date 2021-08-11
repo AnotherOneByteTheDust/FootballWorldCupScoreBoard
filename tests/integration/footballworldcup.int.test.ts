@@ -133,5 +133,22 @@ describe('Competition Score Board', () => {
 
       expect(matchSummaryIds).toEqual(expected);
     })
+
+    it('should return summary of games ordered by the most recent match if total score is the same', () => {
+      const data: Array<Match> = [
+        { hometeam: "Mexico", awayteam: "Canada", homescore: 0, awayscore: 5 },
+        { hometeam: "Spain", awayteam: "Brazil", homescore: 10, awayscore: 2 },
+        { hometeam: "Germany", awayteam: "France", homescore: 2, awayscore: 2 },
+        { hometeam: "Uruguay", awayteam: "Italy", homescore: 6, awayscore: 6 },
+        { hometeam: "Argentina", awayteam: "Australia", homescore: 3, awayscore: 1 }
+      ]
+      gameIdentifiers = generateMatchDatabase(data);
+      const expected = [gameIdentifiers[3], gameIdentifiers[1], gameIdentifiers[0],
+                        gameIdentifiers[4], gameIdentifiers[2]];
+
+      const matchSummaryIds = scoreboard.getMatchSummary().map(match => { return match?.getId() });
+
+      expect(matchSummaryIds).toEqual(expected);
+    })
   })
 })
