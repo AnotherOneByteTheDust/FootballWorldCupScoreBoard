@@ -89,5 +89,14 @@ describe('Competition Score Board', () => {
 
       expect(score).toEqual(newScore);
     })
+
+    it('should not be able to update a game score if it is negative', () => {
+      const newScore = [-3,-5]
+
+      scoreboard.updateGame(gameIdentifiers[1], newScore)
+      const score = scoreboard.getGameScore(gameIdentifiers[1]);
+
+      expect(score).toBeUndefined();
+    })
   })
 })
