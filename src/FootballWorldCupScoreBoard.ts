@@ -14,8 +14,8 @@ export class FootballWorldCupScoreBoard {
   }
 
   newGame(hostTeam: Team, awayTeam: Team): string {
-    const match = new Match(hostTeam, awayTeam);
     const matchId = this.getNewGameIdentifier();
+    const match = new Match(matchId, hostTeam, awayTeam);
     this.matches.set(matchId, match);
     return matchId;
   }
@@ -37,5 +37,9 @@ export class FootballWorldCupScoreBoard {
 
   getGameById(gameId: string): Match | undefined {
     return this.matches.get(gameId);
+  }
+
+  findFinishedGameById(gameId: string): Match | undefined {
+      return this.record.find( match => match.getId() === gameId );
   }
 }

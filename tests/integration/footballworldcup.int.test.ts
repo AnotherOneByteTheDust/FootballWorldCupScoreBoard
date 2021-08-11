@@ -58,7 +58,7 @@ describe('Competition Score Board', () => {
       scoreboard.finishGameById(gameIdentifiers[1]);
       const game = scoreboard.findFinishedGameById(gameIdentifiers[1]);
 
-      expect(game).toEqual(gameIdentifiers[1]);
+      expect(game?.getId()).toEqual(gameIdentifiers[1]);
     })
   })
 })
