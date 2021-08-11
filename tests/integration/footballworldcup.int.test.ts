@@ -47,11 +47,11 @@ describe('Competition Score Board', () => {
       })
     })
 
-    it('should finish a match succesfully') {
+    it('should finish a match succesfully', () => {
       scoreboard.finishGameById(gameIdentifiers[1]);
       const game = scoreboard.getGameById(gameIdentifiers[1]);
 
       expect(game).toBeUndefined();
-    }
+    })
   })
 })
