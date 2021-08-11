@@ -49,6 +49,10 @@ export class FootballWorldCupScoreBoard {
   }
 
   updateGame(gameId: string, score: Array<number>): Match | undefined {
+    if (score[0] < 0 || score[1] < 0) {
+      return
+    }
+
     const match = this.matches.get(gameId);
 
     if (match) {
