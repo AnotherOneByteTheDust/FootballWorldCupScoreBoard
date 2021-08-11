@@ -64,19 +64,23 @@ export class FootballWorldCupScoreBoard {
 
   getMatchSummary(): (Match | undefined)[] {
     return [ ...this.matches.keys() ]
-      .map(matchId => { return { "id": matchId, "score": this.getMatchTotalScore(matchId) }})
+      .map(matchId => { return { "id": parseInt(matchId), "score": this.getMatchTotalScore(matchId) }})
       .sort( function(a, b) {
+        const isGreaterThan = (a: number, b: number) => { return a > b };
+        const isEqual = (a: number, b: number) => { return a === b };
         const a_score = a.score || -1;
         const b_score = b.score || -1;
 
-        if (a_score > b_score) {
+        if (isGreaterThan(a_score, b_score)) {
           return -1;
         }
-        if (a.id < b.id) {
-          return 1;
+
+        if (isEqual(a_score, b_score) && isGreaterThan(a.id, b.id)) {
+          return -1;
         }
-        return 0
+
+        return 0;
     })
-    .map(match => { return this.getGame(match.id)} )
+    .map(match => { return this.getGame(match.id.toString())} )
   }
 }
