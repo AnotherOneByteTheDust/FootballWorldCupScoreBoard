@@ -3,6 +3,23 @@ import { Team } from '../../src/Team';
 
 const scoreboard = new FootballWorldCupScoreBoard();
 
+interface Match {
+  hometeam: string;
+  awayteam: string;
+  homescore: number;
+  awayscore: number;
+}
+
+function generateMatchDatabase(data: Array<Match>): Array<string> {
+  return data.map( match => {
+    const homeTeam = new Team(match["hometeam"]);
+    const awayTeam = new Team(match["awayteam"]);
+    const gameId = scoreboard.newGame(homeTeam, awayTeam);
+    scoreboard.updateGame(gameId, [match["homescore"], match["awayscore"]]);
+    return gameId;
+  })
+}
+
 describe('Competition Score Board', () => {
 
   describe('Start a new game', () => {
@@ -35,16 +52,12 @@ describe('Competition Score Board', () => {
       gameIdentifiers = []
 
       const data = [
-        { hometeam: "Alemania", awayteam: "Francia" },
-        { hometeam: "España", awayteam: "Berlin" },
-        { hometeam: "Mexico", awayteam: "Argentina" }
+        { hometeam: "Alemania", awayteam: "Francia", homescore: 0, awayscore: 0 },
+        { hometeam: "España", awayteam: "Berlin", homescore: 0, awayscore: 0 },
+        { hometeam: "Mexico", awayteam: "Argentina", homescore: 0, awayscore: 0 }
       ]
 
-      gameIdentifiers = data.map( match => {
-        const homeTeam = new Team(match["hometeam"]);
-        const awayTeam = new Team(match["awayteam"]);
-        return scoreboard.newGame(homeTeam, awayTeam);
-      })
+      gameIdentifiers = generateMatchDatabase(data);
     })
 
     it('should finish a match succesfully', () => {
@@ -69,16 +82,12 @@ describe('Competition Score Board', () => {
       gameIdentifiers = []
 
       const data = [
-        { hometeam: "Alemania", awayteam: "Francia" },
-        { hometeam: "España", awayteam: "Berlin" },
-        { hometeam: "Mexico", awayteam: "Argentina" }
+        { hometeam: "Alemania", awayteam: "Francia", homescore: 0, awayscore: 0 },
+        { hometeam: "España", awayteam: "Berlin", homescore: 0, awayscore: 0 },
+        { hometeam: "Mexico", awayteam: "Argentina", homescore: 0, awayscore: 0 }
       ]
 
-      gameIdentifiers = data.map( match => {
-        const homeTeam = new Team(match["hometeam"]);
-        const awayTeam = new Team(match["awayteam"]);
-        return scoreboard.newGame(homeTeam, awayTeam);
-      })
+      gameIdentifiers = generateMatchDatabase(data);
     })
 
     it('should update a game score', () => {
@@ -98,6 +107,25 @@ describe('Competition Score Board', () => {
       const scoreAfterUpdate = scoreboard.getGameScore(gameIdentifiers[1]);
 
       expect(scoreAfterUpdate).toEqual(scoreBeforeUpdate);
+    })
+  })
+
+  describe('Get summary of games', () => {
+    let gameIdentifiers: Array<string>;
+
+    it('should return summary of games ordered by total score', () => {
+      const data: Array<Match> = [
+        { hometeam: "Mexico", awayteam: "Canada", homescore: 0, awayscore: 5 },
+        { hometeam: "Spain", awayteam: "Brazil", homescore: 10, awayscore: 2 },
+        { hometeam: "Germany", awayteam: "France", homescore: 2, awayscore: 4 },
+        { hometeam: "Argentina", awayteam: "Australia", homescore: 3, awayscore: 1 }
+      ]
+      gameIdentifiers = generateMatchDatabase(data);
+      const result = [gameIdentifiers[1], gameIdentifiers[2], gameIdentifiers[0], gameIdentifiers[3]]
+
+      const matchSummaryIds = scoreboard.getMatchSummary().map(match => { return match?.getId() });
+
+      expect(matchSummaryIds).toEqual(result);
     })
   })
 })
