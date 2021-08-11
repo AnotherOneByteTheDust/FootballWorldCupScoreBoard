@@ -61,4 +61,22 @@ export class FootballWorldCupScoreBoard {
 
     return match;
   }
+
+  getMatchSummary(): (Match | undefined)[] {
+    return [ ...this.matches.keys() ]
+      .map(matchId => { return { "id": matchId, "score": this.getMatchTotalScore(matchId) }})
+      .sort( function(a, b) {
+        const a_score = a.score || -1;
+        const b_score = b.score || -1;
+
+        if (a_score > b_score) {
+          return -1;
+        }
+        if (a.id < b.id) {
+          return 1;
+        }
+        return 0
+    })
+    .map(match => { return this.getGame(match.id)} )
+  }
 }

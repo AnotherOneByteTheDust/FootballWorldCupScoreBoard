@@ -1,7 +1,7 @@
 import { FootballWorldCupScoreBoard } from '../../src/FootballWorldCupScoreBoard'
 import { Team } from '../../src/Team';
 
-const scoreboard = new FootballWorldCupScoreBoard();
+let scoreboard = new FootballWorldCupScoreBoard();
 
 interface Match {
   hometeam: string;
@@ -49,6 +49,7 @@ describe('Competition Score Board', () => {
     let gameIdentifiers: Array<string>;
 
     beforeEach(() => {
+      scoreboard = new FootballWorldCupScoreBoard();
       gameIdentifiers = []
 
       const data = [
@@ -79,6 +80,7 @@ describe('Competition Score Board', () => {
     let gameIdentifiers: Array<string>;
 
     beforeEach(() => {
+      scoreboard = new FootballWorldCupScoreBoard();
       gameIdentifiers = []
 
       const data = [
@@ -113,6 +115,10 @@ describe('Competition Score Board', () => {
   describe('Get summary of games', () => {
     let gameIdentifiers: Array<string>;
 
+    beforeEach(() => {
+      scoreboard = new FootballWorldCupScoreBoard();
+    })
+
     it('should return summary of games ordered by total score', () => {
       const data: Array<Match> = [
         { hometeam: "Mexico", awayteam: "Canada", homescore: 0, awayscore: 5 },
@@ -121,11 +127,11 @@ describe('Competition Score Board', () => {
         { hometeam: "Argentina", awayteam: "Australia", homescore: 3, awayscore: 1 }
       ]
       gameIdentifiers = generateMatchDatabase(data);
-      const result = [gameIdentifiers[1], gameIdentifiers[2], gameIdentifiers[0], gameIdentifiers[3]]
+      const expected = [gameIdentifiers[1], gameIdentifiers[2], gameIdentifiers[0], gameIdentifiers[3]]
 
       const matchSummaryIds = scoreboard.getMatchSummary().map(match => { return match?.getId() });
 
-      expect(matchSummaryIds).toEqual(result);
+      expect(matchSummaryIds).toEqual(expected);
     })
   })
 })
