@@ -10,4 +10,8 @@ export class Team {
   getScore(): number {
     return this.score;
   }
+
+  setScore(score: number): void {
+    this.score = score;
+  }
 }

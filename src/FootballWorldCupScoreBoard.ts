@@ -24,6 +24,11 @@ export class FootballWorldCupScoreBoard {
     return this.matches.get(gameId)?.getTotalScore();
   }
 
+  getGameScore(gameId: string): Array<number> | undefined {
+    return this.matches.get(gameId)?.getScore();
+  }
+
+
   finishGameById(gameId: string): Match | undefined {
     const match = this.matches.get(gameId);
 
@@ -41,5 +46,15 @@ export class FootballWorldCupScoreBoard {
 
   findFinishedGameById(gameId: string): Match | undefined {
       return this.record.find( match => match.getId() === gameId );
+  }
+
+  updateGameById(gameId: string, score: Array<number>): Match | undefined {
+    const match = this.matches.get(gameId);
+
+    if (match) {
+      match.updateScore(score);
+    }
+
+    return match;
   }
 }

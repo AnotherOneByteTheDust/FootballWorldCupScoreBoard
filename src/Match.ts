@@ -16,6 +16,16 @@ export class Match {
     return this.homeTeam.getScore() + this.awayTeam.getScore();
   }
 
+  getScore(): Array<number> {
+    return [ this.homeTeam.getScore(), this.awayTeam.getScore() ];
+  }
+
+  updateScore(score: Array<number>): Array<number> {
+    this.homeTeam.setScore(score[0]);
+    this.awayTeam.setScore(score[1]);
+    return this.getScore();
+  }
+
   getId(): string {
     return this.id;
   }
