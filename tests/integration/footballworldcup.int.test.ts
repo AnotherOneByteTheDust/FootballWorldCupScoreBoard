@@ -53,5 +53,12 @@ describe('Competition Score Board', () => {
 
       expect(game).toBeUndefined();
     })
+
+    it('should be able to get a finished game from record', () => {
+      scoreboard.finishGameById(gameIdentifiers[1]);
+      const game = scoreboard.findFinishedGameById(gameIdentifiers[1]);
+
+      expect(game).toEqual(gameIdentifiers[1]);
+    })
   })
 })
