@@ -1,5 +1,7 @@
 # Football World Cup Score Board Library
 
+This library was developed for Football World Cup, but could be used for other competitions.
+
 ## Get started
 
 Clone the repository:
