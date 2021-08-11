@@ -61,4 +61,33 @@ describe('Competition Score Board', () => {
       expect(game?.getId()).toEqual(gameIdentifiers[1]);
     })
   })
+
+  describe('Update a game score', () => {
+    let gameIdentifiers: Array<string>;
+
+    beforeEach(() => {
+      gameIdentifiers = []
+
+      const data = [
+        { hometeam: "Alemania", awayteam: "Francia" },
+        { hometeam: "España", awayteam: "Berlin" },
+        { hometeam: "Mexico", awayteam: "Argentina" }
+      ]
+
+      gameIdentifiers = data.map( match => {
+        const homeTeam = new Team(match["hometeam"]);
+        const awayTeam = new Team(match["awayteam"]);
+        return scoreboard.newGame(homeTeam, awayTeam);
+      })
+    })
+
+    it('should update a game score', () => {
+      const newScore = [3,5]
+
+      scoreboard.updateGameById(gameIdentifiers[1], newScore)
+      const score = scoreboard.getGameScore(gameIdentifiers[1]);
+
+      expect(score).toEqual(newScore);
+    })
+  })
 })
