@@ -1,7 +1,7 @@
-import { FootballWorldCupScoreBoard } from '../../src/FootballWorldCupScoreBoard'
+import { CompetitionScoreBoard } from '../../src/CompetitionScoreBoard'
 import { Team } from '../../src/Team';
 
-let scoreboard = new FootballWorldCupScoreBoard();
+let scoreboard = new CompetitionScoreBoard();
 
 interface Match {
   hometeam: string;
@@ -49,7 +49,7 @@ describe('Competition Score Board', () => {
     let matches: Array<string>;
 
     beforeEach(() => {
-      scoreboard = new FootballWorldCupScoreBoard();
+      scoreboard = new CompetitionScoreBoard();
       matches = []
 
       const data = [
@@ -67,20 +67,13 @@ describe('Competition Score Board', () => {
 
       expect(match).toBeUndefined();
     })
-
-    it('should be able to get a finished match from record', () => {
-      scoreboard.finishMatch(matches[1]);
-      const match = scoreboard.findFinishedMatch(matches[1]);
-
-      expect(match?.getId()).toEqual(matches[1]);
-    })
   })
 
   describe('Update a match score', () => {
     let matches: Array<string>;
 
     beforeEach(() => {
-      scoreboard = new FootballWorldCupScoreBoard();
+      scoreboard = new CompetitionScoreBoard();
       matches = []
 
       const data = [
@@ -116,7 +109,7 @@ describe('Competition Score Board', () => {
     let matches: Array<string>;
 
     beforeEach(() => {
-      scoreboard = new FootballWorldCupScoreBoard();
+      scoreboard = new CompetitionScoreBoard();
     })
 
     it('should return summary of matchs ordered by total score', () => {

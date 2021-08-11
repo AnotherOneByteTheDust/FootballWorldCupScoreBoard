@@ -1,9 +1,8 @@
 import { Match } from "./Match";
 import { Team } from "./Team";
 
-export class FootballWorldCupScoreBoard {
+export class CompetitionScoreBoard {
 
-  private record = Array<Match>();
   private matches = new Map<string, Match>();
 
   lastMatchId = 0;
@@ -33,7 +32,6 @@ export class FootballWorldCupScoreBoard {
     const match = this.matches.get(gameId);
 
     if (match) {
-      this.record.push(match);
       this.matches.delete(gameId);
     }
 
