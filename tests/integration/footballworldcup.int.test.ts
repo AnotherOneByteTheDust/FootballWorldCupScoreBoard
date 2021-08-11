@@ -14,43 +14,43 @@ function generateMatchDatabase(data: Array<Match>): Array<string> {
   return data.map( match => {
     const homeTeam = new Team(match["hometeam"]);
     const awayTeam = new Team(match["awayteam"]);
-    const gameId = scoreboard.newGame(homeTeam, awayTeam);
-    scoreboard.updateGame(gameId, [match["homescore"], match["awayscore"]]);
-    return gameId;
+    const matchId = scoreboard.newMatch(homeTeam, awayTeam);
+    scoreboard.updateMatch(matchId, [match["homescore"], match["awayscore"]]);
+    return matchId;
   })
 }
 
 describe('Competition Score Board', () => {
 
-  describe('Start a new game', () => {
+  describe('Start a new match', () => {
 
-    let game: string;
+    let match: string;
 
     beforeAll(() => {
       const hostTeam = new Team("Alemania");
       const awayTeam = new Team("Francia");
 
-      game = scoreboard.newGame(hostTeam, awayTeam);
+      match = scoreboard.newMatch(hostTeam, awayTeam);
     })
 
-    it('should be able to start a new game', () => {
-      expect(game).toBeDefined();
+    it('should be able to start a new match', () => {
+      expect(match).toBeDefined();
     })
 
-    it('should have total score equals to 0 when a game is started', () => {
-      const totalScore = scoreboard.getMatchTotalScore(game);
+    it('should have total score equals to 0 when a match is started', () => {
+      const totalScore = scoreboard.getMatchTotalScore(match);
 
       expect(totalScore).toEqual(0);
     })
   })
 
-  describe('Finish a game', () => {
+  describe('Finish a match', () => {
 
-    let gameIdentifiers: Array<string>;
+    let matches: Array<string>;
 
     beforeEach(() => {
       scoreboard = new FootballWorldCupScoreBoard();
-      gameIdentifiers = []
+      matches = []
 
       const data = [
         { hometeam: "Alemania", awayteam: "Francia", homescore: 0, awayscore: 0 },
@@ -58,30 +58,30 @@ describe('Competition Score Board', () => {
         { hometeam: "Mexico", awayteam: "Argentina", homescore: 0, awayscore: 0 }
       ]
 
-      gameIdentifiers = generateMatchDatabase(data);
+      matches = generateMatchDatabase(data);
     })
 
     it('should finish a match succesfully', () => {
-      scoreboard.finishGame(gameIdentifiers[1]);
-      const game = scoreboard.getGame(gameIdentifiers[1]);
+      scoreboard.finishMatch(matches[1]);
+      const match = scoreboard.getMatch(matches[1]);
 
-      expect(game).toBeUndefined();
+      expect(match).toBeUndefined();
     })
 
-    it('should be able to get a finished game from record', () => {
-      scoreboard.finishGame(gameIdentifiers[1]);
-      const game = scoreboard.findFinishedGame(gameIdentifiers[1]);
+    it('should be able to get a finished match from record', () => {
+      scoreboard.finishMatch(matches[1]);
+      const match = scoreboard.findFinishedMatch(matches[1]);
 
-      expect(game?.getId()).toEqual(gameIdentifiers[1]);
+      expect(match?.getId()).toEqual(matches[1]);
     })
   })
 
-  describe('Update a game score', () => {
-    let gameIdentifiers: Array<string>;
+  describe('Update a match score', () => {
+    let matches: Array<string>;
 
     beforeEach(() => {
       scoreboard = new FootballWorldCupScoreBoard();
-      gameIdentifiers = []
+      matches = []
 
       const data = [
         { hometeam: "Alemania", awayteam: "Francia", homescore: 0, awayscore: 0 },
@@ -89,52 +89,52 @@ describe('Competition Score Board', () => {
         { hometeam: "Mexico", awayteam: "Argentina", homescore: 0, awayscore: 0 }
       ]
 
-      gameIdentifiers = generateMatchDatabase(data);
+      matches = generateMatchDatabase(data);
     })
 
-    it('should update a game score', () => {
+    it('should update a match score', () => {
       const newScore: [number, number] = [3, 5]
 
-      scoreboard.updateGame(gameIdentifiers[1], newScore)
-      const score = scoreboard.getGameScore(gameIdentifiers[1]);
+      scoreboard.updateMatch(matches[1], newScore)
+      const score = scoreboard.getMatchScore(matches[1]);
 
       expect(score).toEqual(newScore);
     })
 
-    it('should not be able to update a game score if it is negative', () => {
+    it('should not be able to update a match score if it is negative', () => {
       const newScore: [number, number] = [-3, -5]
 
-      const scoreBeforeUpdate = scoreboard.getGameScore(gameIdentifiers[1]);
-      scoreboard.updateGame(gameIdentifiers[1], newScore)
-      const scoreAfterUpdate = scoreboard.getGameScore(gameIdentifiers[1]);
+      const scoreBeforeUpdate = scoreboard.getMatchScore(matches[1]);
+      scoreboard.updateMatch(matches[1], newScore)
+      const scoreAfterUpdate = scoreboard.getMatchScore(matches[1]);
 
       expect(scoreAfterUpdate).toEqual(scoreBeforeUpdate);
     })
   })
 
-  describe('Get summary of games', () => {
-    let gameIdentifiers: Array<string>;
+  describe('Get summary of matchs', () => {
+    let matches: Array<string>;
 
     beforeEach(() => {
       scoreboard = new FootballWorldCupScoreBoard();
     })
 
-    it('should return summary of games ordered by total score', () => {
+    it('should return summary of matchs ordered by total score', () => {
       const data: Array<Match> = [
         { hometeam: "Mexico", awayteam: "Canada", homescore: 0, awayscore: 5 },
         { hometeam: "Spain", awayteam: "Brazil", homescore: 10, awayscore: 2 },
         { hometeam: "Germany", awayteam: "France", homescore: 2, awayscore: 4 },
         { hometeam: "Argentina", awayteam: "Australia", homescore: 3, awayscore: 1 }
       ]
-      gameIdentifiers = generateMatchDatabase(data);
-      const expected = [gameIdentifiers[1], gameIdentifiers[2], gameIdentifiers[0], gameIdentifiers[3]]
+      matches = generateMatchDatabase(data);
+      const expected = [matches[1], matches[2], matches[0], matches[3]]
 
       const matchSummaryIds = scoreboard.getMatchSummary().map(match => { return match?.getId() });
 
       expect(matchSummaryIds).toEqual(expected);
     })
 
-    it('should return summary of games ordered by the most recent match if total score is the same', () => {
+    it('should return summary of matchs ordered by the most recent match if total score is the same', () => {
       const data: Array<Match> = [
         { hometeam: "Mexico", awayteam: "Canada", homescore: 0, awayscore: 5 },
         { hometeam: "Spain", awayteam: "Brazil", homescore: 10, awayscore: 2 },
@@ -142,9 +142,9 @@ describe('Competition Score Board', () => {
         { hometeam: "Uruguay", awayteam: "Italy", homescore: 6, awayscore: 6 },
         { hometeam: "Argentina", awayteam: "Australia", homescore: 3, awayscore: 1 }
       ]
-      gameIdentifiers = generateMatchDatabase(data);
-      const expected = [gameIdentifiers[3], gameIdentifiers[1], gameIdentifiers[0],
-                        gameIdentifiers[4], gameIdentifiers[2]];
+      matches = generateMatchDatabase(data);
+      const expected = [matches[3], matches[1], matches[0],
+                        matches[4], matches[2]];
 
       const matchSummaryIds = scoreboard.getMatchSummary().map(match => { return match?.getId() });
 

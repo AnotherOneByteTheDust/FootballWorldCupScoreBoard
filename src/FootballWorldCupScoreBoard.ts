@@ -6,15 +6,15 @@ export class FootballWorldCupScoreBoard {
   private record = Array<Match>();
   private matches = new Map<string, Match>();
 
-  lastGameId = 0;
+  lastMatchId = 0;
 
-  private getNewGameIdentifier(): string {
-    this.lastGameId += 1;
-    return this.lastGameId.toString();
+  private getNewMatchIdentifier(): string {
+    this.lastMatchId += 1;
+    return this.lastMatchId.toString();
   }
 
-  newGame(hostTeam: Team, awayTeam: Team): string {
-    const matchId = this.getNewGameIdentifier();
+  newMatch(hostTeam: Team, awayTeam: Team): string {
+    const matchId = this.getNewMatchIdentifier();
     const match = new Match(matchId, hostTeam, awayTeam);
     this.matches.set(matchId, match);
     return matchId;
@@ -24,12 +24,12 @@ export class FootballWorldCupScoreBoard {
     return this.matches.get(gameId)?.getTotalScore();
   }
 
-  getGameScore(gameId: string): Array<number> | undefined {
+  getMatchScore(gameId: string): Array<number> | undefined {
     return this.matches.get(gameId)?.getScore();
   }
 
 
-  finishGame(gameId: string): Match | undefined {
+  finishMatch(gameId: string): Match | undefined {
     const match = this.matches.get(gameId);
 
     if (match) {
@@ -40,15 +40,15 @@ export class FootballWorldCupScoreBoard {
     return match
   }
 
-  getGame(gameId: string): Match | undefined {
+  getMatch(gameId: string): Match | undefined {
     return this.matches.get(gameId);
   }
 
-  findFinishedGame(gameId: string): Match | undefined {
+  findFinishedMatch(gameId: string): Match | undefined {
       return this.record.find( match => match.getId() === gameId );
   }
 
-  updateGame(gameId: string, score: [number, number]): Match | undefined {
+  updateMatch(gameId: string, score: [number, number]): Match | undefined {
     if (score[0] < 0 || score[1] < 0) {
       return
     }
@@ -81,6 +81,6 @@ export class FootballWorldCupScoreBoard {
 
         return 0;
     })
-    .map(match => { return this.getGame(match.id.toString())} )
+    .map(match => { return this.getMatch(match.id.toString())} )
   }
 }
